@@ -1,13 +1,13 @@
 package cn.clown;
 
 
+import cn.clown.common.MyBatisUtil;
 import cn.clown.domain.Student;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
-import sun.security.krb5.Config;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,7 +50,15 @@ public class MyBatisTest {
         int rows = sqlSession.insert("cn.clown.dao.StudentDao.insertStudent", student);
 
 //        sqlSession.commit();
-        System.out.println("增加记录的行数："+rows);
+        System.out.println("增加记录的行数：" + rows);
         sqlSession.close();
+    }
+
+    @Test
+    public void testUtils() {
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        List<Student> list = sqlSession.selectList("cn.clown.dao.StudentDao.selectAllStudents");
+        List<Object> list1 = sqlSession.selectList("aaa");
+        list1.forEach(item -> System.out.println(item));
     }
 }
