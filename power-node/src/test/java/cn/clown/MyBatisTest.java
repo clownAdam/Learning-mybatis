@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
+import sun.security.krb5.Config;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,4 +34,17 @@ public class MyBatisTest {
 
     }
 
+    @Test
+    public void testInsert() throws IOException {
+        String config = "mybatis.xml";
+        InputStream in = Resources.getResourceAsStream(config);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(in);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        Student student = new Student(3, "李四", "444@qq.com", 44);
+        int rows = sqlSession.insert("cn.clown.dao.StudentDao.insertStudent", student);
+
+        sqlSession.commit();
+        System.out.println("增加记录的行数："+rows);
+        sqlSession.close();
+    }
 }

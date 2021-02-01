@@ -17,4 +17,9 @@
       /*要执行的sql语句*/
       select id,name,email,age from student;
     </select>
+
+    <insert id="insertStudent">
+        /*insert sql:*/
+        insert into student(id,name,email,age) values (#{id},#{name},#{email},#{age});
+    </insert>
 </mapper>

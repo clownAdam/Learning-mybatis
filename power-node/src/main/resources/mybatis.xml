@@ -21,7 +21,7 @@
             <dataSource type="POOLED">
                 <!--连接数据库的四个要素-->
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://clown.ltd:3306/db_learning_mybatis"/>
+                <property name="url" value="jdbc:mysql://clown.ltd:3306/db_learning_mybatis?useUnicode=true&amp;characterEncoding=utf-8"/>
                 <property name="username" value="root"/>
                 <property name="password" value="root"/>
             </dataSource>
