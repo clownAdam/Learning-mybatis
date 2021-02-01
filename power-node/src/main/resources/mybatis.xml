@@ -3,6 +3,12 @@
         PUBLIC "-//mybatis.org/DTD Cofnig 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <settings>
+        <!--配置日志功能:
+            可以在控制台输出执行的SQL语句和参数
+        -->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
     <!--配置mybatis环境-->
     <environments default="mysql">
         <!--id:数据源的名称-->
