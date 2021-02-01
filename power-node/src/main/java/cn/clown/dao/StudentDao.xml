@@ -31,4 +31,14 @@
                 insert into student(id,name,email,age) values (#{id},#{name},#{email},#{age});
 
     </insert>
+
+    <select id="selectById" resultType="cn.clown.domain.Student" parameterType="int">
+        /*select student by id*/
+        select * from student where id=#{id};
+    </select>
+
+    <select id="selectMultiParam" resultType="cn.clown.domain.Student">
+        /*select multi param sql:*/
+        select * from student where name=#{name} or age=#{age};
+    </select>
 </mapper>

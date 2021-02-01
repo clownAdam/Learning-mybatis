@@ -2,6 +2,7 @@ package cn.clown;
 
 
 import cn.clown.common.MyBatisUtil;
+import cn.clown.dao.StudentDao;
 import cn.clown.domain.Student;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -59,6 +60,39 @@ public class MyBatisTest {
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         List<Student> list = sqlSession.selectList("cn.clown.dao.StudentDao.selectAllStudents");
         List<Object> list1 = sqlSession.selectList("aaa");
-        list1.forEach(item -> System.out.println(item));
+        list1.forEach(System.out::println);
+    }
+
+    @Test
+    public void testMapper() throws IOException {
+        InputStream in = Resources.getResourceAsStream("mybatis.xml");
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(in);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        StudentDao mapper = sqlSession.getMapper(StudentDao.class);
+
+        List<Student> students = mapper.selectAllStudents();
+        students.forEach(System.out::println);
+
+//        int zhang = mapper.insertStudent(new Student(8, "zhang", "32f2fr@qq.com", 23));
+//        System.out.println("zhang = " + zhang);
+        sqlSession.commit();
+        sqlSession.close();
+    }
+    @Test
+    public void testSelectById(){
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        StudentDao mapper = sqlSession.getMapper(StudentDao.class);
+        Student student = mapper.selectById(1);
+        System.out.println("student = " + student);
+        sqlSession.close();
+    }
+    @Test
+    public void testSelectMultiParam() throws IOException {
+        SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream("mybatis.xml"));
+        SqlSession sqlSession = factory.openSession();
+        StudentDao mapper = sqlSession.getMapper(StudentDao.class);
+        List<Student> students = mapper.selectMultiParam("张三", 44);
+        students.forEach(System.out::println);
+        sqlSession.close();
     }
 }
