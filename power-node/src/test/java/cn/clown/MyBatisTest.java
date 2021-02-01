@@ -1,6 +1,7 @@
 package cn.clown;
 
 
+import cn.clown.common.MyBatisUtil;
 import cn.clown.domain.Student;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -33,4 +34,31 @@ public class MyBatisTest {
 
     }
 
+    @Test
+    public void testInsert() throws IOException {
+        String config = "mybatis.xml";
+        /**
+         * Resources:用于读取资源文件
+         */
+        InputStream in = Resources.getResourceAsStream(config);
+        /**
+         * SqlSessionFactoryBuilder():
+         */
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(in);
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);
+        Student student = new Student(4, "李四", "444@qq.com", 44);
+        int rows = sqlSession.insert("cn.clown.dao.StudentDao.insertStudent", student);
+
+//        sqlSession.commit();
+        System.out.println("增加记录的行数：" + rows);
+        sqlSession.close();
+    }
+
+    @Test
+    public void testUtils() {
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        List<Student> list = sqlSession.selectList("cn.clown.dao.StudentDao.selectAllStudents");
+        List<Object> list1 = sqlSession.selectList("aaa");
+        list1.forEach(item -> System.out.println(item));
+    }
 }
