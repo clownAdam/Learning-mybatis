@@ -36,16 +36,7 @@ public class MyBatisTest {
 
     @Test
     public void testInsert() throws IOException {
-        String config = "mybatis.xml";
-        /**
-         * Resources:用于读取资源文件
-         */
-        InputStream in = Resources.getResourceAsStream(config);
-        /**
-         * SqlSessionFactoryBuilder():
-         */
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(in);
-        SqlSession sqlSession = sqlSessionFactory.openSession(true);
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
         Student student = new Student(4, "李四", "444@qq.com", 44);
         int rows = sqlSession.insert("cn.clown.dao.StudentDao.insertStudent", student);
 
