@@ -14,31 +14,117 @@
         resultType:查询语句的返回结果数据类型,使用全限定类名
     -->
     <select id="selectAllStudents" resultType="cn.clown.domain.Student">
-
-              /*要执行的sql语句*/
-              select id,name,email,age from student;
-
+        /*要执行的sql语句*/
+                select id,name,email,age
+                from student;
     </select>
     <select id="aaa" resultType="cn.clown.domain.Student">
-
-              /*要执行的sql语句*/
-              select id,name,email,age from student;
-
+        /*要执行的sql语句*/
+                select id,name,email,age
+                from student;
     </select>
     <insert id="insertStudent">
-
-                /*insert sql:*/
-                insert into student(id,name,email,age) values (#{id},#{name},#{email},#{age});
-
+        /*insert sql:*/
+                insert into student(id, name, email, age)
+                values (#{id}, #{name}, #{email}, #{age});
     </insert>
 
     <select id="selectById" resultType="cn.clown.domain.Student" parameterType="int">
         /*select student by id*/
-        select * from student where id=#{id};
+                select *
+                from student
+                where id = #{personid};
     </select>
 
     <select id="selectMultiParam" resultType="cn.clown.domain.Student">
         /*select multi param sql:*/
-        select * from student where name=#{name} or age=#{age};
+                select *
+                from student
+                where name = #{name}
+                   or age = #{age};
+    </select>
+
+    <select id="selectMultiObject" resultType="cn.clown.domain.Student">
+        /*select multi object sql:*/
+                select *
+                from student
+                where name = #{queryName}
+                   or age = #{queryAge};
+    </select>
+
+    <select id="selectByNameOrAge" resultType="cn.clown.domain.Student">
+        /*select by name or age sql:*/
+                select *
+                from student
+                where name = #{param1}
+                   or age = #{param2};
+    </select>
+
+    <select id="selectMultiMap" resultType="cn.clown.domain.Student">
+        /*select multi map sql:*/
+                select *
+                from student
+                where name = #{name}
+                   or age = #{age};
+    </select>
+
+    <select id="countStudent" resultType="int">
+        /*count sql :*/
+                select count(*)
+                from student;
+    </select>
+
+    <select id="selectReturnMap" resultType="hashmap">
+        /*select return map*/
+                select name,email
+                from student
+                where id = #{id};
+    </select>
+
+    <select id="selectUseResultMap" resultMap="studentMap">
+        /*select student result map sql:*/
+                select *
+                from student
+                where name = #{queryName}
+                   or age = ${queryAge};
+    </select>
+
+    <select id="selectUseFieldAlias" resultType="cn.clown.domain.PrimaryStudent">
+        /*select use field alias sql:*/
+                select id as stuId,name as stuName,age as stuAge
+                from student
+                where name = #{queryName}
+                   or age = #{queryAge};
+    </select>
+
+    <select id="selectUseDiffResultMap" resultMap="primaryStudentMap">
+        select *
+        from student
+        where name = #{queryName}
+           or age = #{queryAge};
+    </select>
+
+    <!--
+        创建resultMap
+            id:自定义的唯一名称,在<select>使用
+            type:期望转为的java对象的全限定名称或别名
+    -->
+    <resultMap id="studentMap" type="cn.clown.domain.Student">
+        <!--主键字段使用id-->
+        <id column="id" property="id"/>
+        <!--非主键字段使用result-->
+        <result column="name" property="name"/>
+        <result column="email" property="email"/>
+        <result column="age" property="age"/>
+    </resultMap>
+
+    <resultMap id="primaryStudentMap" type="cn.clown.domain.PrimaryStudent">
+        <id column="id" property="stuId"/>
+        <id column="name" property="stuName"/>
+        <id column="age" property="stuAge"/>
+    </resultMap>
+
+    <select id="selectLikeFirst" resultType="cn.clown.domain.Student">
+        select * from student where name like '%' #{like_name} '%';
     </select>
 </mapper>
