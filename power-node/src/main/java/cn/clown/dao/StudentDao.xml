@@ -118,13 +118,13 @@
         <result column="age" property="age"/>
     </resultMap>
 
-    <resultMap id="primaryStudentMap" type="cn.clown.domain.PrimaryStudent">
+    <resultMap id="primaryStudentMap" type="PrimaryStudent">
         <id column="id" property="stuId"/>
         <id column="name" property="stuName"/>
         <id column="age" property="stuAge"/>
     </resultMap>
 
-    <select id="selectLikeFirst" resultType="cn.clown.domain.Student">
+    <select id="selectLikeFirst" resultType="myStudent">
         select *
         from student
         where name like '%' #{like_name} '%';
