@@ -125,6 +125,77 @@
     </resultMap>
 
     <select id="selectLikeFirst" resultType="cn.clown.domain.Student">
-        select * from student where name like '%' #{like_name} '%';
+        select *
+        from student
+        where name like '%' #{like_name} '%';
+    </select>
+
+    <select id="selectStudentIf" resultType="cn.clown.domain.Student">
+        /*selectStudentIf sql:*/
+        select id,name,email,age
+        from student
+        where 1 = 1
+        <if test="name!=null and name!=''">
+            and name=#{name}
+        </if>
+        <if test="age>0">
+            and age&gt;#{age}
+        </if>
+    </select>
+
+    <select id="selectStudentWhere" resultType="cn.clown.domain.Student">
+        /*selectStudentWhere sql:*/
+        select id,name,email,age from student
+        <where>
+            <if test="name!=null and name!=''">
+                name=#{name}
+            </if>
+            <if test="age>0">
+                and age&gt;#{age}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectStudentForeach" resultType="cn.clown.domain.Student">
+        /*selectStudentForeach sql:*/
+        select id,name,email,age from student
+        <where>
+            <if test="list != null and list.size > 0">
+                id in
+                <foreach collection="list" open="(" close=")" item="stuIed" separator=",">
+                    #{stuIed}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectStudentForList" resultType="cn.clown.domain.Student">
+        select id,name,email,age from student
+        <where>
+            <if test="list!=null and list.size>0">
+                id in
+                <foreach collection="list" open="(" close=")" separator="," item="stu">
+                    #{stu.id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <sql id="studentSql">
+        select id,name,email,age
+        from student
+    </sql>
+
+    <select id="selectStudentSqlFragment" resultType="cn.clown.domain.Student">
+        <!--引用sql片段-->
+        <include refid="studentSql"/>
+        <where>
+            <if test="list!=null and list.size>0">
+                id in
+                <foreach collection="list" open="(" close=")" separator="," item="studentObj">
+                    #{studentObj.id}
+                </foreach>
+            </if>
+        </where>
     </select>
 </mapper>

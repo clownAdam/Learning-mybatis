@@ -118,4 +118,44 @@ public interface StudentDao {
      * @return Students
      */
     List<Student> selectLikeFirst(@Param("like_name") String like_name);
+
+    /**
+     * selectStudentIf
+     *
+     * @param student student
+     * @return students
+     */
+    List<Student> selectStudentIf(Student student);
+
+    /**
+     * selectStudentWhere
+     *
+     * @param student student
+     * @return student
+     */
+    List<Student> selectStudentWhere(Student student);
+
+    /**
+     * selectStudentForeach
+     *
+     * @param idList idList
+     * @return student
+     */
+    List<Student> selectStudentForeach(List<Integer> idList);
+
+    /**
+     * selectStudentForList
+     *
+     * @param studentList studentList
+     * @return studentList
+     */
+    List<Student> selectStudentForList(List<Student> studentList);
+
+    /**
+     * selectStudentSqlFragment
+     *
+     * @param studentList studentList
+     * @return studentList
+     */
+    List<Student> selectStudentSqlFragment(List<Student> studentList);
 }
