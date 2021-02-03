@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -176,5 +177,58 @@ public class MyBatisTest {
         List<Student> students = mapper.selectLikeFirst("李");
         students.forEach(System.out::println);
         sqlSession.close();
+    }
+
+    @Test
+    public void testSelectStudentIf() {
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        StudentDao mapper = sqlSession.getMapper(StudentDao.class);
+        List<Student> student = mapper.selectStudentIf(new Student(1, "李四", "030@qq.com", 11));
+        student.forEach(System.out::println);
+        sqlSession.close();
+    }
+
+    @Test
+    public void testSelectStudentWhere() {
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        StudentDao mapper = sqlSession.getMapper(StudentDao.class);
+        List<Student> students = mapper.selectStudentWhere(new Student(1, "李四", "030@qq.com", 11));
+        students.forEach(System.out::println);
+        sqlSession.close();
+    }
+
+    @Test
+    public void testSelectStudentForeach() {
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        StudentDao mapper = sqlSession.getMapper(StudentDao.class);
+        List<Student> students = mapper.selectStudentForeach(Arrays.asList(1, 2, 8));
+        students.forEach(System.out::println);
+        sqlSession.close();
+    }
+
+    @Test
+    public void testSelectStudentForList() {
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        StudentDao mapper = sqlSession.getMapper(StudentDao.class);
+        List<Student> students = mapper.selectStudentForList(Arrays.asList(new Student(1, "", "", 0), new Student(3, "", "", 0), new Student(4, "", "", 0)));
+        students.forEach(System.out::println);
+        sqlSession.close();
+    }
+
+    @Test
+    public void testSelectStudentSqlFragment() throws IOException {
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream("mybatis.xml"));
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        StudentDao mapper = sqlSession.getMapper(StudentDao.class);
+        List<Student> students = mapper.selectStudentSqlFragment(
+                Arrays.asList(
+                        new Student(1,"","",2),
+                        new Student(4,"","",2),
+                        new Student(5,"","",2)
+                )
+        );
+        students.forEach(System.out::println);
+        sqlSession.close();
+
     }
 }
