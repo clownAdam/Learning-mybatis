@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org/DTD Cofnig 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <!--(properties?,settings?,typeAliases?,typeHandlers?,objectFactory?,objectWrapperFactory?,reflectorFactory?,plugins?,environments?,databaseIdProvider?,mappers?)"-->
     <properties resource="jdbc.properties"/>
     <settings>
         <!--配置日志功能:
@@ -14,6 +15,9 @@
         <typeAlias type="cn.clown.domain.Student" alias="myStudent"/>
         <package name="cn.clown.domain"/>
     </typeAliases>
+    <!--<plugins>-->
+        <!--<plugin interceptor="com.github.pagehelper.PageInterceptor"/>-->
+    <!--</plugins>-->
     <!--配置mybatis环境-->
     <environments default="mysql">
         <!--id:数据源的名称-->
